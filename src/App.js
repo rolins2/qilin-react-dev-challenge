@@ -1,13 +1,48 @@
-import React from "react";
+import React, { lazy, useState } from "react";
 import RegistrationForm from "./RegistrationForm";
-
+import GitHubUser from "./GitHubUser";
+//const GitHubUser = lazy(()=>import('./GitHubUser'));
 export default function App({}) {
+
+    const [gitUsr,setGitUsr] = useState("");
+    const [isSubmitted,setIsSubmitted] = useState(false);
+
+  function handleSubmit(e){
+    e.preventDefault();
+
+    setIsSubmitted(true);
+    
+  }
+
+function handleChange(e){
+  console.log(e.target.value);
+    setGitUsr(e.target.value);
+
+}
+
   return (
     <div >
     
       {/* Add any additional instructions or guidance for candidates here */}
 
       <RegistrationForm />
+
+
+     <div className="container">
+
+     <form onSubmit={handleSubmit}>  
+
+<label> Enter Github username</label>
+<input required name = "gName" type = "text" onChange={handleChange}></input>
+
+<button type = "submit"> Submit </button>
+</form>
+
+{isSubmitted && <GitHubUser userNme = {gitUsr}/>}
+
+     </div>
+
+
     </div>
   );
 }
