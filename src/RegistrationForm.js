@@ -41,13 +41,16 @@ function RegistrationForm() {
     }// regular expression to check for valid email
 
 
-    if(formData.password = ""){
+    if(formData.password === ""){
       validateErrors.password = "Password is required "
-    } else if(formData.password.length > 8 ){
+    } else if(formData.password.length < 8 ){
         validateErrors.password = "Password length too  short min 8 characters"
     }
 
-    if(formData.cpassword !== formData.password){
+    if(formData.cpassword === ""){
+      validateErrors.cpassword = "Enter password to confirm  "
+
+    }else if(formData.cpassword !== formData.password){
       validateErrors.cpassword = "Passwords do not match"
     }
 
