@@ -1,82 +1,63 @@
-import React, { useEffect, useState }  from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-function GitHubUser(userNme){
 
-    
- const ApiUrl = "https://api.github.com/users/";
+function GitHubUser(props) {
+  const usssr = props.userNme;
+  const ApiUrl = "https://api.github.com/users/";
 
- const [user,setUser] = useState([]);
- const  [usersRepo,setUserRepo] = useState([]);
- const [repUrl,setRepUrl] = useState("");
-  try{
+  const [isTrue, setIsTrue] = useState(false);
+  const [msg, setMsg] = useState("User not found");
+  const [user, setUser] = useState([]);
+  const [usersRepo, setUserRepo] = useState([]);
+  const [repUrl, setRepUrl] = useState("");
 
-    // useEffect(()=>{
-    //      axios.get(ApiUrl + "mojombo")
-    //     .then((res)=>{setUser(res.data)
-    //       setRepUrl(user.repos_url)
-    //     });
+  useEffect(() => {
+    fetch(ApiUrl + usssr)
+      .then((res) => res.json())
+      .then((upr) => {
+        setUser(upr);
+        setRepUrl(upr.repos_url);
+      })
+      .catch((error) => {
+        console.error("Could not fetch data");
+        setIsTrue(false);
+      });
+  }, [usssr]);
 
-    fetch(ApiUrl +"mojombo")
-    .then((res)=>res.json())
-    .then((upr)=>{setUser(upr)
-    setRepUrl(upr.repos_url)
-    })
-        .catch((error)=> console.error("Couldnt fetch data"))
+  useEffect(() => {
+    if (isTrue) {
+      fetch(repUrl)
+        .then((response) => response.json())
+        .then((upr) => {
+          setUserRepo(upr);
+          setMsg("");
+        })
+        .catch((error) => {
+          console.error("Repo not found");
+          setMsg("Repo not found");
+        });
+    }
+  }, [isTrue, repUrl]);
 
-     
-
-    
-    
-
-   
-  }catch(err){
-    console.log("Error found "+err);
-  }
-
-
-//   useEffect(()=>{
-//     axios.get(repUrl)
-//     .then((res)=>{setUserRepo(res.data)})
-// })
- 
-
-fetch(repUrl)
-.then((response)=>response.json())
-.then((upr)=>{setUserRepo(upr)})
-.catch((error)=> console.error("Repo no found"))
-
-const usr = [
-    {name: "Max"},
-    {name : "lappin"}
-]
-
-    return (
-        <div> Some github code
-
-          <h1>  </h1>  
-
-        <div> 
-        <img src = {user.avatar_url} alt="Picture of user"/>
-
-        {user.login}
-
-
-            {user.repos_url};
-        
-        </div>
-
-        <div> 
+  return (
+    <div>
+      <h4> Entered username {usssr} </h4>
+      {isTrue && (
+        <div>
+          <img src={user.avatar_url} alt="Picture of user" height={200} width={200} className="rounded" />
+          <h4> The username is {user.login}</h4>
+          <div>
             <ul>
-            {usersRepo.map((d)=>( 
-                    <li> key = {d.name}</li>
-                ))}
-
+              {usersRepo.map((d) => (
+                <li key={d.id}> Repo Name {d.name}</li>
+              ))}
             </ul>
-               
+          </div>
         </div>
-
-        </div>
-    )
+      )}
+      {msg && <p>{msg}</p>}
+    </div>
+  );
 }
 
 export default GitHubUser;
