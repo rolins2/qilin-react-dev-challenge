@@ -3,13 +3,8 @@ import RegistrationForm from "./RegistrationForm";
 
 export default function App({}) {
   return (
-    <div style={styles.container}>
-      <img src={"https://i.ibb.co/B2q9y4J/temp.png"} alt='Qilin Software Lab Logo' style={styles.logo} />
-      <h1 style={styles.heading}>Welcome to Qilin Software Lab</h1>
-      <p style={styles.description}>
-        Thank you for participating in our Junior React Developer pre-assessment! Below is a simple component. Please feel free to edit this component
-        and start working on the assessment tasks.
-      </p>
+    <div >
+    
       {/* Add any additional instructions or guidance for candidates here */}
 
       <RegistrationForm />
