@@ -1,7 +1,9 @@
-import React, { lazy, useState } from "react";
+import React, { lazy, useEffect, useState } from "react";
 import RegistrationForm from "./RegistrationForm";
 import GitHubUser from "./GitHubUser";
 //const GitHubUser = lazy(()=>import('./GitHubUser'));
+import { ThemeProvider } from "./ThemeSwitcher";
+import ThemeBtn from "./ThemeButton";
 export default function App({}) {
 
     const [gitUsr,setGitUsr] = useState("");
@@ -20,17 +22,38 @@ function handleChange(e){
 
 }
 
+
+const [themeMode ,setThemeMode] = useState('light');
+
+const darkTheme = ()=>{
+  setThemeMode('dark')
+}
+
+const lightTheme = ()=>{
+  setThemeMode('light')
+}
+
+useEffect(()=>{
+  document.querySelector('html').classList.remove('dark',"light")
+
+  document.querySelector('html').classList.add(themeMode)
+},[themeMode])
+  
   return (
-    <div >
+
+
+    <ThemeProvider value = {{themeMode,   darkTheme ,lightTheme}}>
+      <div >
+        <ThemeBtn/>
     
-      {/* Add any additional instructions or guidance for candidates here */}
+    {/* Add any additional instructions or guidance for candidates here */}
 
-      <RegistrationForm />
+    <RegistrationForm />
 
 
-     <div className="container">
+   <div className="container">
 
-     <form onSubmit={handleSubmit}>  
+   <form onSubmit={handleSubmit}>  
 
 <label> Enter Github username</label>
 <input required name = "gName" type = "text" onChange={handleChange}></input>
@@ -40,10 +63,12 @@ function handleChange(e){
 
 {isSubmitted && <GitHubUser userNme = {gitUsr}/>}
 
-     </div>
+   </div>
 
 
-    </div>
+  </div>
+    </ThemeProvider>
+  
   );
 }
 
