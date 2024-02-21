@@ -2,9 +2,9 @@ import React, { lazy, useEffect, useState } from "react";
 import RegistrationForm from "./RegistrationForm";
 import GitHubUser from "./GitHubUser";
 //const GitHubUser = lazy(()=>import('./GitHubUser'));
-import { ThemeProvider } from "./ThemeSwitcher";
+import { ThemeContext, themes } from "./ThemeSwitcher";
 import ThemeBtn from "./ThemeButton";
-export default function App({}) {
+export default function App() {
 
     const [gitUsr,setGitUsr] = useState("");
     const [isSubmitted,setIsSubmitted] = useState(false);
@@ -23,28 +23,54 @@ function handleChange(e){
 }
 
 
-const [themeMode ,setThemeMode] = useState('light');
+const [themeMode , setThemeMode] = useState(themes.light);
 
-const darkTheme = ()=>{
-  setThemeMode('dark')
-}
-
-const lightTheme = ()=>{
-  setThemeMode('light')
-}
-
+const body = document.body
 useEffect(()=>{
-  document.querySelector('html').classList.remove('dark',"light")
+  switch(themeMode){
+    case themes.light:
+      body.classList.remove('bg-dark')
+      body.classList.remove('text-light')
 
-  document.querySelector('html').classList.add(themeMode)
+      body.classList.add('bg-light');
+      body.classList.add('text-dark');
+      break;
+    case themes.dark:
+
+       body.classList.remove('bg-light')
+       body.classList.remove('text-dark')
+
+
+        body.classList.add('bg-dark');
+        body.classList.add('text-light');
+        break;
+
+
+    default:
+      body.classList.remove('bg-dark')
+      body.classList.remove('text-light')
+
+      body.classList.add('bg-light');
+      body.classList.add('text-dark');
+
+    
+  }
 },[themeMode])
+
+
+
   
+
+function handleOnClick(){
+  themeMode === themes.light ? setThemeMode(themes.dark) : setThemeMode(themes.light);
+}
   return (
 
+    
 
-    <ThemeProvider value = {{themeMode,   darkTheme ,lightTheme}}>
+    <ThemeContext.Provider value = { {themeMode ,handleOnClick}}>
       <div >
-        <ThemeBtn/>
+        <ThemeBtn theme={themeMode}/>
     
     {/* Add any additional instructions or guidance for candidates here */}
 
@@ -67,7 +93,7 @@ useEffect(()=>{
 
 
   </div>
-    </ThemeProvider>
+    </ThemeContext.Provider>
   
   );
 }

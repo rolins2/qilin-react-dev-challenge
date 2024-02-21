@@ -1,15 +1,15 @@
-import React from 'react'
+import { Button } from 'bootstrap'
+import React, { useContext } from 'react'
+import {ThemeContext} from './ThemeSwitcher'
 
-function onChangeBtn(e){
-    console.log(e);
+function ThemeButton() {
+    const {themeMode ,handleOnClick} = useContext(ThemeContext)
+  return (
+    <div>
+        <h5> theme of the website is {themeMode}</h5>
+        <button className={`btn ${themeMode === 'dark' ?  'btn-primary': 'btn-dark'} border`} onClick={handleOnClick}> {themeMode === "dark" ? "light" : "dark"}    </button>
+    </div>
+  )
 }
 
-function ThemeBtn(){
-    return (<div> 
-        <input 
-        type =  "button " className='btn btn-primary'  placeholder='Switch  theme color' onClick = {onChangeBtn} />
-        
-         </div>)
-}
-
-export default ThemeBtn
+export default ThemeButton

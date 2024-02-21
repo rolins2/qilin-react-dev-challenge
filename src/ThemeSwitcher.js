@@ -1,15 +1,13 @@
-import {  createContext, Children, useState ,useContext } from "react";
+import {  createContext, useState ,useContext } from "react";
 
-export const ThemeContext = createContext({
-    themeMode:"light",
-    darkTheme: () =>{},
-    lightTheme :() => {},
-});
-
-export const ThemeProvider = ThemeContext.Provider;
+export const themes = {
+    dark: 'dark',
+    light : 'light'
+}
 
 //creating a hook
+export const ThemeContext = createContext({});
 
-export default function useTheme(){
-    return useContext(ThemeContext);
-}
+// export default function useTheme(){
+//     return useContext(ThemeContext);
+// }
