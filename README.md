@@ -1,3 +1,12 @@
+I have integrated the github user check in the app js file instead of using a seperate component.
+
+
+
+
+
+
+
+
 # Qilin Software Lab - Junior React Developer Pre-Assessment
 
 Welcome to the Junior React Developer pre-assessment for Qilin Software Lab. This assessment is designed to evaluate your React.js skills. Please follow the instructions below to complete the assessment.
