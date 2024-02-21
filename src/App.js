@@ -4,6 +4,10 @@ import GitHubUser from "./GitHubUser";
 //const GitHubUser = lazy(()=>import('./GitHubUser'));
 import { ThemeContext, themes } from "./ThemeSwitcher";
 import ThemeBtn from "./ThemeButton";
+import { BrowserRouter,Routes, Route } from "react-router-dom";
+
+import Home from "./Home";
+import About from "./About";
 export default function App() {
 
     const [gitUsr,setGitUsr] = useState("");
@@ -69,6 +73,26 @@ function handleOnClick(){
     
 
     <ThemeContext.Provider value = { {themeMode ,handleOnClick}}>
+
+    <BrowserRouter>
+        <Routes>
+          <Route index element = {<Home/>}/>
+          <Route path = "/home" element = {<Home />} />
+
+          <Route path = "/about" element = {<About />} />
+
+          
+        </Routes>
+    </BrowserRouter>
+
+    <nav>
+    <button className="btn btn-dark"> <a href="/home">Home Page</a>  </button>  
+
+      <button className="btn btn-dark"> <a href="/about" >About </a> </button>
+
+
+    </nav>
+
       <div >
         <ThemeBtn theme={themeMode}/>
     
